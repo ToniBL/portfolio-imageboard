@@ -1,10 +1,22 @@
 <!doctype html>
 <html>
 <head>
-    <title></title>
+    <title>My Imageboard</title>
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
+    <h1>My Imageboard</h1>
+
+    <div id="main"></div>
+    <h2>HI {{name}}</h2>
+
+     <h3 v-if= "seen"> this is visible if seen is true </h3> 
+     <h3 v-else= "else"> this is visible if seen is false</h3>
+      <!--   we can do logic, if and else have to follow each other imediatly  -->
+
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
+   <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"> </script>-->
+    <script src="/js/script.js"></script>
 </body>
 </html>
