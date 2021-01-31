@@ -1,23 +1,24 @@
 <html>
 <head>
     <title>My Imageboard</title>
-    <link rel="stylesheet" href="/css/styles.css">
+    <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-    <h1>My Imageboard</h1>
-    
-
+      
+<header class="header">
+     <h1>My Imageboard</h1>
+</header>
     <!-- This container is for our Vue instance! -->
     <!-- It will have access to our Vue code. -->
     <div id='main'>
-    <h2>Hello {{name}} </h2>
+   
         <!-- LOOPING IN VUE! -->
         <!-- 'each' is our iterator -->
-            <div class="container">
-            <div class ="card" v-for ="each in images">
+        <div class="container">
+            <div class="card" v-for="each in images">
                 <img :src="each.url" alt="">
-                <p>{{each.title}}</p>
-                
+                <p class="title">{{each.title}}</p>
+              
             </div>
         </div>
     </div>
