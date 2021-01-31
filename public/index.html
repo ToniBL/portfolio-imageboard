@@ -1,22 +1,30 @@
-<!doctype html>
 <html>
 <head>
     <title>My Imageboard</title>
-    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/styles.css">
 </head>
 <body>
     <h1>My Imageboard</h1>
+    
 
-    <div id="main"></div>
-    <h2>HI {{name}}</h2>
-
-     <h3 v-if= "seen"> this is visible if seen is true </h3> 
-     <h3 v-else= "else"> this is visible if seen is false</h3>
-      <!--   we can do logic, if and else have to follow each other imediatly  -->
+    <!-- This container is for our Vue instance! -->
+    <!-- It will have access to our Vue code. -->
+    <div id='main'>
+    <h2>Hello {{name}} </h2>
+        <!-- LOOPING IN VUE! -->
+        <!-- 'each' is our iterator -->
+            <div class="container">
+            <div class ="card" v-for ="each in images">
+                <img :src="each.url" alt="">
+                <p>{{each.title}}</p>
+                
+            </div>
+        </div>
+    </div>
 
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
-   <!-- <script src="https://unpkg.com/axios/dist/axios.min.js"> </script>-->
+    <!-- ORDER MATTERS! make sure script.js goes last -->
     <script src="/js/script.js"></script>
 </body>
 </html>
