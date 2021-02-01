@@ -38,20 +38,23 @@ console.log("script is linked");
         // methods will store ALL the functions we create!!!
         methods: {
             clickHandler: function () {
-                console.log("this:", this);
                 const fd = new FormData();
                 fd.append("title", this.title);
                 fd.append("description", this.description);
                 fd.append("username", this.username);
                 fd.append("file", this.file);
-                axios
+                var self = this;
+                axios // response hier = req.body from server app.post upload
                     .post("/upload", fd)
-                    .then((response) => console.log("response:", response))
-                    .catch((err) => console.log("err in clickHandler:", err));
-            },
+                    .then((response) => {
+                        console.log("response:", response);
+                        self.images.unshift(response.data);
+                    })
 
+                    .catch((err) => console.log("err: ", err));
+            },
+            //this starts when selecting file, reacts to @change in html / e.target.file = file in form
             fileSelectHandler: function (e) {
-                console.log("e:", e);
                 this.file = e.target.files[0];
             },
         },

@@ -5,7 +5,10 @@ const db = require("./db");
 const multer = require("multer");
 const uidSafe = require("uid-safe");
 const path = require("path");
+const s3 = require("./s3");
+const { s3Url } = require("./config.json");
 
+// midleware to bring file in aws format
 const diskStorage = multer.diskStorage({
     destination: function (req, file, callback) {
         callback(null, __dirname + "/uploads");
@@ -16,7 +19,7 @@ const diskStorage = multer.diskStorage({
         });
     },
 });
-
+// creates file in uploads folder
 const uploader = multer({
     storage: diskStorage,
     limits: {
@@ -37,11 +40,20 @@ app.get("/images", (req, res) => {
         });
 });
 
-app.post("/upload", uploader.single("file"), (req, res) => {
-    console.log("req.body:", req.body);
-    console.log("req.file:", req.file);
+app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
+    console.log("req.body: ", req.body);
+    console.log("req.file: ", req.file);
     if (req.file) {
-        res.json({ success: true });
+        // here sql insert
+        req.body.url = s3Url + req.file.filename;
+        db.imgToDb(
+            req.body.url,
+            req.body.username,
+            req.body.title,
+            req.body.description
+        ).then(() => {
+            res.json(req.body);
+        });
     } else {
         res.json({ success: false });
     }
