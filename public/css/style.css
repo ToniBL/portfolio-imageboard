@@ -13,21 +13,24 @@ body {
 .container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-
     grid-gap: 20px;
     width: 90vw;
 }
 
 .card {
-    border: solid #d8ac9c 2px;
-    border-radius: 5%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    border: solid #d8ac9c 1px;
+    border-radius: 3%;
     background-color: whitesmoke;
 }
 
 img {
-    max-width: 100%;
+    max-width: 95%;
     height: 90%;
-    border-radius: 5%;
+    border-radius: 3%;
+    padding: 5px;
 }
 
 .image--title {

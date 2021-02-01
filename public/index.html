@@ -11,13 +11,20 @@
     <!-- This container is for our Vue instance! -->
     <!-- It will have access to our Vue code. -->
     <div id='main'>
-   
+   <form action="">
+       <input v-model="title" type="text" name="title" placeholder="image title">
+       <input v-model="description" type="text" name="description" placeholder="description">
+       <input v-model="username" type="text" name="username" placeholder="username">
+       <input type="file" name="file" accept="image/*">
+       <button @click.prevent="clickHandler">submit</button>
+   </form>
+
         <!-- LOOPING IN VUE! -->
         <!-- 'each' is our iterator -->
         <div class="container">
             <div class="card" v-for="each in images">
                 <img :src="each.url" alt="">
-                <p class="title">{{each.title}}</p>
+                <p class="image--title">{{each.title}}</p>
               
             </div>
         </div>
