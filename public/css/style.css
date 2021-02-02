@@ -4,6 +4,7 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-sizing: border-box;
 }
 
 .header {
@@ -12,8 +13,10 @@ body {
 
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    grid-gap: 20px;
+    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
+    /* grid-template-columns: repeat (4, 1fr); */
+    grid-gap: 1rem;
+    margin: 1rem;
     width: 90vw;
 }
 
@@ -28,13 +31,19 @@ body {
 
 img {
     max-width: 95%;
-    height: 90%;
+    height: 95%;
     border-radius: 3%;
     padding: 5px;
 }
 
 .image--title {
-    padding-bottom: 5px;
+    color: #999b84;
+}
+.overlay {
+    position: fixed;
+    height: 10rem;
+    width: 10rem;
+    background-color: slateblue;
 }
 
 /* @media screen and (max-width: 600px) {

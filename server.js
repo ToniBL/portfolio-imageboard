@@ -32,7 +32,7 @@ app.use(express.static("public"));
 app.get("/images", (req, res) => {
     db.getImages()
         .then((result) => {
-            console.log("result:", result);
+            //   console.log("result:", result);
             res.json(result.rows);
         })
         .catch((err) => {
@@ -41,8 +41,8 @@ app.get("/images", (req, res) => {
 });
 
 app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
-    console.log("req.body: ", req.body);
-    console.log("req.file: ", req.file);
+    // console.log("req.body: ", req.body);
+    //  console.log("req.file: ", req.file);
     if (req.file) {
         // here sql insert
         req.body.url = s3Url + req.file.filename;
@@ -57,6 +57,18 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
     } else {
         res.json({ success: false });
     }
+});
+
+app.get("/modal/:id", (req, res) => {
+    console.log("req.params:", req.params);
+    db.getModal(id)
+        .then((result) => {
+            console.log("result modal:", result);
+            res.json(result.rows);
+        })
+        .catch((err) => {
+            console.log("err in getModal:", err);
+        });
 });
 
 app.listen(8080, () => console.log("IB server is listening..."));

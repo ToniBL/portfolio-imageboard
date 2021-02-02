@@ -2,6 +2,36 @@ console.log("script is linked");
 // this file is where all of our Vue code will exist!!
 
 (function () {
+    Vue.component("image-modal", {
+        template: "#modal", // here goes the id from html script-template
+        data: function () {
+            // each component has it's own data
+            return {
+                //name: "toni",
+                id: "",
+                image: [],
+                title: "",
+                description: "",
+                username: "",
+                created_at: "",
+            };
+        },
+        props: ["id"],
+
+        mounted: function () {
+            var that = this;
+            console.log("this.id:", this.id);
+
+            axios.get("/modal/" + this.id).then(function (response) {
+                console.log("response from get modal:", response.data);
+                console.log("that:", that);
+            });
+        },
+        methods: {
+            // increaseCount: function () {
+            //     this.count++; this one method aplies to all the components individually
+        },
+    });
     new Vue({
         // el - element in our html that has access to our Vue code!
         el: "#main",
@@ -13,6 +43,8 @@ console.log("script is linked");
             description: "",
             username: "",
             file: null,
+            //imgClicked: false,
+            id: "",
         },
 
         // mounted is a lifecycle method that runs when the Vue instance renders
@@ -25,7 +57,7 @@ console.log("script is linked");
                 .get("/images")
                 .then(function (response) {
                     console.log("this inside axios: ", self);
-                    // axios will ALWAYS store the info coming from the server inside a 'data' property
+                    // axios will ALWAYS store the info coming from the server inside 'data' property
                     console.log("response from /images: ", response.data);
 
                     self.images = response.data;
@@ -47,7 +79,7 @@ console.log("script is linked");
                 axios // response hier = req.body from server app.post upload
                     .post("/upload", fd)
                     .then((response) => {
-                        console.log("response:", response);
+                        console.log("response clickHandler:", response);
                         self.images.unshift(response.data);
                     })
 
@@ -56,6 +88,16 @@ console.log("script is linked");
             //this starts when selecting file, reacts to @change in html / e.target.file = file in form
             fileSelectHandler: function (e) {
                 this.file = e.target.files[0];
+            },
+            selectImg: function (id) {
+                this.id = id;
+                console.log("this.id:", this.id);
+                imgClicked = true;
+
+                // console.log(e.target);
+                // //console.log(this)
+                // selectImg = each.id;
+                // console.log(each.id);
             },
         },
     });

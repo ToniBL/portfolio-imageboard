@@ -16,19 +16,33 @@
     <input v-model="description" type="text" name="description" placeholder="description">
     <input v-model="username" type="text" name="username" placeholder="username">
     <input @change="fileSelectHandler" type="file" name="file" accept="image/*">
-    <button @click.prevent="clickHandler">Submit</button>
+    <button @click.prevent="clickHandler">Upload</button>
 </form>
 
         <!-- LOOPING IN VUE! -->
         <!-- 'each' is our iterator -->
         <div class="container">
             <div class="card" v-for="each in images">
-                <img :src="each.url" alt="">
+                <img @click="selectImg(each.id)" :src="each.url" alt="">
                 <p class="image--title">{{each.title}}</p>
               
             </div>
         </div>
+
+        <image-modal class="overlay" 
+        :id="id"
+       > 
+        </image-modal>  
+          <!--   components can be put anywhere within our main vue instance / we can put as many as we like / each has it's own data, although we only write one data function in script.js / we can have conditionals in the component and decide weither to display it. have a parameter "selected fruit" in main vue instance data and give it a boolean value-->
     </div>
+    <!-- script tag OUTSIDE "main" controls output of component, data for script comes from vue.component in script.js -->
+    <script type="text/x-template" id="modal">
+    <div>
+        <h1>This is my first component</h1>
+   <!-- RENDER THE MODAL HERE -->    
+    </div>
+        
+    </script>
 
     <script src="/js/vue.js"></script>
     <script src="/js/axios.min.js"></script>
