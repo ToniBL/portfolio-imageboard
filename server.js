@@ -60,8 +60,9 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 });
 
 app.get("/modal/:id", (req, res) => {
-    console.log("req.params:", req.params);
-    db.getModal(id)
+    console.log("req.params.id:", req.params.id);
+
+    db.getModal(req.params.id)
         .then((result) => {
             console.log("result modal:", result);
             res.json(result.rows);

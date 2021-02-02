@@ -8,26 +8,41 @@ console.log("script is linked");
             // each component has it's own data
             return {
                 //name: "toni",
-                id: "",
-                image: [],
+                url: "",
                 title: "",
                 description: "",
                 username: "",
                 created_at: "",
             };
         },
-        props: ["id"],
+        props: ["imageId"],
 
         mounted: function () {
-            var that = this;
+            var self = this;
+
+            console.log("modal mounted");
             console.log("this.id:", this.id);
 
-            axios.get("/modal/" + this.id).then(function (response) {
-                console.log("response from get modal:", response.data);
-                console.log("that:", that);
-            });
+            axios
+                .get(`/modal/${this.imageId}`)
+                .then(function (response) {
+                    console.log("self:", self);
+                    console.log("response from get modal:", response.data);
+                    self.url = response.data[0].url;
+                    console.log("self.url:", self.url);
+                    self.title = response.data[0].title;
+                    self.description = response.data[0].description;
+                    self.username = response.data[0].username;
+                    self.created_at = response.data[0].created_at;
+                })
+                .catch((err) => {
+                    console.log("err in modal axios:", err);
+                });
         },
         methods: {
+            closeModal: function () {
+                this.$emit("close");
+            },
             // increaseCount: function () {
             //     this.count++; this one method aplies to all the components individually
         },
@@ -43,8 +58,7 @@ console.log("script is linked");
             description: "",
             username: "",
             file: null,
-            //imgClicked: false,
-            id: "",
+            selectImg: null,
         },
 
         // mounted is a lifecycle method that runs when the Vue instance renders
@@ -89,16 +103,21 @@ console.log("script is linked");
             fileSelectHandler: function (e) {
                 this.file = e.target.files[0];
             },
-            selectImg: function (id) {
-                this.id = id;
-                console.log("this.id:", this.id);
-                imgClicked = true;
-
-                // console.log(e.target);
-                // //console.log(this)
-                // selectImg = each.id;
-                // console.log(each.id);
+            closeModal: function () {
+                console.log("close modal on instance side");
+                this.selectImg = null;
             },
+            //OLD CODE FIRST TRY
+            // selectImg: function (id) {
+            //     this.id = id;
+            //     console.log("this.id:", this.id);
+            //     imgClicked = true;
+
+            //     // console.log(e.target);
+            //     // //console.log(this)
+            //     // selectImg = each.id;
+            //     // console.log(each.id);+
+            // },
         },
     });
 })(); // IFEE closing

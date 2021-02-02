@@ -25,6 +25,7 @@ body {
     flex-direction: column;
     align-items: center;
     border: solid #d8ac9c 1px;
+    box-shadow: 2px 4px #d8ac9c;
     border-radius: 3%;
     background-color: whitesmoke;
 }
@@ -41,9 +42,10 @@ img {
 }
 .overlay {
     position: fixed;
-    height: 10rem;
-    width: 10rem;
+    height: 30rem;
+    width: 30rem;
     background-color: slateblue;
+    top: 10rem;
 }
 
 /* @media screen and (max-width: 600px) {

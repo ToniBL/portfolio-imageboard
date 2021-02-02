@@ -23,23 +23,31 @@
         <!-- 'each' is our iterator -->
         <div class="container">
             <div class="card" v-for="each in images">
-                <img @click="selectImg(each.id)" :src="each.url" alt="">
+                <img @click="selectImg = each.id" :src="each.url" alt="">
                 <p class="image--title">{{each.title}}</p>
               
             </div>
         </div>
 
-        <image-modal class="overlay" 
-        :id="id"
-       > 
-        </image-modal>  
+        <image-modal
+            v-if="selectImg"
+            :image-id="selectImg"
+            @close="closeModal"
+        ></image-modal>  
           <!--   components can be put anywhere within our main vue instance / we can put as many as we like / each has it's own data, although we only write one data function in script.js / we can have conditionals in the component and decide weither to display it. have a parameter "selected fruit" in main vue instance data and give it a boolean value-->
     </div>
     <!-- script tag OUTSIDE "main" controls output of component, data for script comes from vue.component in script.js -->
     <script type="text/x-template" id="modal">
-    <div>
-        <h1>This is my first component</h1>
-   <!-- RENDER THE MODAL HERE -->    
+    <div class = overlay>
+        <!-- RENDER THE MODAL HERE --> 
+        <p class="exit--modal" @click="closeModal">X</p>
+        <div class="image">
+           <img :src="url" alt="">
+           <h2>{{title}}</h2>
+           <h2> {{description}} </h2>
+           <p>uploaded by {{username}} on {{created_at}}</p>
+
+        </div>   
     </div>
         
     </script>
