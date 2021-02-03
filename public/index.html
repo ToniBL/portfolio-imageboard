@@ -10,32 +10,32 @@
 </header>
     <!-- This container is for our Vue instance! -->
     <!-- It will have access to our Vue code. -->
-    <div id='main'>
-  <form>
-    <input v-model="title" type="text" name="title" placeholder="title">
-    <input v-model="description" type="text" name="description" placeholder="description">
-    <input v-model="username" type="text" name="username" placeholder="username">
-    <input @change="fileSelectHandler" type="file" name="file" accept="image/*">
-    <button @click.prevent="clickHandler">Upload</button>
-</form>
+<div id='main'>
+    <form class="upload">
+        <input v-model="title" type="text" name="title" placeholder="title">
+        <input v-model="description" type="text" name="description" placeholder="description">
+        <input v-model="username" type="text" name="username" placeholder="username">
+        <input @change="fileSelectHandler" type="file" name="file" accept="image/*">
+        <button @click.prevent="postImg">Upload</button>  
+    </form>
 
         <!-- LOOPING IN VUE! -->
         <!-- 'each' is our iterator -->
-        <div class="container">
-            <div class="card" v-for="each in images">
-                <img @click="selectImg = each.id" :src="each.url" alt="">
-                <p class="image--title">{{each.title}}</p>
-              
-            </div>
+    <div class="container">
+        <div class="card" v-for="each in images">
+            <img @click="selectImg = each.id" :src="each.url" alt="">
+            <p class="image--title">{{each.title}}</p>
         </div>
-
-        <image-modal
-            v-if="selectImg"
-            :image-id="selectImg"
-            @close="closeModal"
-        ></image-modal>  
-          <!--   components can be put anywhere within our main vue instance / we can put as many as we like / each has it's own data, although we only write one data function in script.js / we can have conditionals in the component and decide weither to display it. have a parameter "selected fruit" in main vue instance data and give it a boolean value-->
     </div>
+
+    <image-modal
+        v-if="selectImg"
+        :image-id="selectImg"
+        @close="closeModal"
+    ></image-modal>  
+          <!--   components can be put anywhere within our main vue instance / we can put as many as we like / each has it's own data, although we only write one data function in script.js / we can have conditionals in the component and decide weither to display it. have a parameter "selected fruit" in main vue instance data and give it a boolean value-->
+    <button @click="more">view more</button>
+</div>
     <!-- script tag OUTSIDE "main" controls output of component, data for script comes from vue.component in script.js -->
     <script type="text/x-template" id="modal">
     <div class = overlay>

@@ -32,7 +32,7 @@ app.use(express.static("public"));
 app.get("/images", (req, res) => {
     db.getImages()
         .then((result) => {
-            //   console.log("result:", result);
+            //  console.log("result:", result);
             res.json(result.rows);
         })
         .catch((err) => {
@@ -61,7 +61,6 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 
 app.get("/modal/:id", (req, res) => {
     console.log("req.params.id:", req.params.id);
-
     db.getModal(req.params.id)
         .then((result) => {
             console.log("result modal:", result);
@@ -69,6 +68,17 @@ app.get("/modal/:id", (req, res) => {
         })
         .catch((err) => {
             console.log("err in getModal:", err);
+        });
+});
+
+app.get("/more/:latestId", (req, res) => {
+    db.moreImages(req.params.id)
+        .then((result) => {
+            // console.log("result in more:", result);
+            res.json(result.rows);
+        })
+        .catch((err) => {
+            console.log("err in /more:", err);
         });
 });
 

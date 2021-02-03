@@ -59,6 +59,7 @@ console.log("script is linked");
             username: "",
             file: null,
             selectImg: null,
+            latestId: 0,
         },
 
         // mounted is a lifecycle method that runs when the Vue instance renders
@@ -75,6 +76,10 @@ console.log("script is linked");
                     console.log("response from /images: ", response.data);
 
                     self.images = response.data;
+                    const latest = self.images[self.images.length - 1];
+                    console.log("latest:", latest);
+                    latestId = latest.id;
+                    console.log("latestId:", latestId);
                 })
                 .catch(function (err) {
                     console.log("err in /images: ", err);
@@ -83,7 +88,7 @@ console.log("script is linked");
 
         // methods will store ALL the functions we create!!!
         methods: {
-            clickHandler: function () {
+            postImg: function () {
                 const fd = new FormData();
                 fd.append("title", this.title);
                 fd.append("description", this.description);
@@ -107,7 +112,15 @@ console.log("script is linked");
                 console.log("close modal on instance side");
                 this.selectImg = null;
             },
-            //OLD CODE FIRST TRY
+
+            more: function () {
+                var self = this;
+                axios.get(`/more/${latestId}`).then(function (response) {
+                    self.images.push(response.data);
+                });
+            },
+
+            //OLD CODE FIRST TRY PART 3
             // selectImg: function (id) {
             //     this.id = id;
             //     console.log("this.id:", this.id);
