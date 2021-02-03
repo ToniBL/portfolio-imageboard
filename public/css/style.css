@@ -25,7 +25,7 @@ body {
     flex-direction: column;
     align-items: center;
     border: solid #d8ac9c 1px;
-    box-shadow: 2px 4px #d8ac9c;
+    box-shadow: 2px 4px #ecdcd6;
     border-radius: 3%;
     background-color: whitesmoke;
 }
@@ -42,10 +42,21 @@ img {
 }
 .overlay {
     position: fixed;
-    height: 30rem;
-    width: 30rem;
-    background-color: slateblue;
+    height: 20rem;
+    width: 20rem;
+    background-color: #d8ac9cc7;
     top: 10rem;
+}
+
+.image {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img--modal {
+    max-width: 65%;
+    height: 65%;
 }
 
 /* @media screen and (max-width: 600px) {

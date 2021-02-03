@@ -72,7 +72,7 @@ app.get("/modal/:id", (req, res) => {
 });
 
 app.get("/more/:latestId", (req, res) => {
-    db.moreImages(req.params.id)
+    db.moreImages(req.params.latestId)
         .then((result) => {
             // console.log("result in more:", result);
             res.json(result.rows);

@@ -60,6 +60,7 @@ console.log("script is linked");
             file: null,
             selectImg: null,
             latestId: 0,
+            moreImg: true,
         },
 
         // mounted is a lifecycle method that runs when the Vue instance renders
@@ -74,12 +75,8 @@ console.log("script is linked");
                     console.log("this inside axios: ", self);
                     // axios will ALWAYS store the info coming from the server inside 'data' property
                     console.log("response from /images: ", response.data);
-
                     self.images = response.data;
-                    const latest = self.images[self.images.length - 1];
-                    console.log("latest:", latest);
-                    latestId = latest.id;
-                    console.log("latestId:", latestId);
+                    self.latestId = self.images[self.images.length - 1].id;
                 })
                 .catch(function (err) {
                     console.log("err in /images: ", err);
@@ -114,9 +111,24 @@ console.log("script is linked");
             },
 
             more: function () {
+                // console.log("latest:", latest);
+                // latestId = latest.id;s
+                // console.log("latestId:", latestId);
+                this.latestId = this.images[this.images.length - 1].id;
                 var self = this;
-                axios.get(`/more/${latestId}`).then(function (response) {
-                    self.images.push(response.data);
+                axios.get(`/more/${this.latestId}`).then(function (response) {
+                    console.log(response.data);
+                    // console.log(
+                    //     "response.data[0].lowestId:",
+                    //     response.data[0].lowestId
+                    // );
+                    // console.log("self.latestId:", self.latestId);
+                    for (let i = 0; i < response.data.length; i++) {
+                        if (response.data[i].id === response.data[i].lowestId) {
+                            moreImg = false;
+                        }
+                    }
+                    self.images = [...self.images, ...response.data];
                 });
             },
 
@@ -131,6 +143,21 @@ console.log("script is linked");
             //     // selectImg = each.id;
             //     // console.log(each.id);+
             // },
+        },
+    });
+    Vue.component("comments", {
+        template: "#comments", //
+        data: function () {
+            return {
+                comments: [],
+                username: "",
+                comment: "",
+            };
+        },
+        props: ["imageId"],
+        mounted: function () {
+            axios.get(`/comment/${this.immageId}`)
+            .then((){})
         },
     });
 })(); // IFEE closing

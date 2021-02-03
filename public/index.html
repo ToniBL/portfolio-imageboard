@@ -34,7 +34,7 @@
         @close="closeModal"
     ></image-modal>  
           <!--   components can be put anywhere within our main vue instance / we can put as many as we like / each has it's own data, although we only write one data function in script.js / we can have conditionals in the component and decide weither to display it. have a parameter "selected fruit" in main vue instance data and give it a boolean value-->
-    <button @click="more">view more</button>
+    <button id="more" v-if="moreImg" @click="more">view more</button>
 </div>
     <!-- script tag OUTSIDE "main" controls output of component, data for script comes from vue.component in script.js -->
     <script type="text/x-template" id="modal">
@@ -42,10 +42,10 @@
         <!-- RENDER THE MODAL HERE --> 
         <p class="exit--modal" @click="closeModal">X</p>
         <div class="image">
-           <img :src="url" alt="">
-           <h2>{{title}}</h2>
-           <h2> {{description}} </h2>
-           <p>uploaded by {{username}} on {{created_at}}</p>
+           <img class="img--modal" :src="url" alt="">
+           <h2 class="title-modal">{{title}}</h2>
+           <h2 class="description--modal"> {{description}} </h2>
+           <p class="upload--modal">uploaded by {{username}} on {{created_at}}</p>
 
         </div>   
     </div>
