@@ -28,6 +28,7 @@ const uploader = multer({
 });
 
 app.use(express.static("public"));
+app.use("/comment", express.json()); // does what?
 
 app.get("/images", (req, res) => {
     db.getImages()
@@ -79,6 +80,23 @@ app.get("/more/:latestId", (req, res) => {
         })
         .catch((err) => {
             console.log("err in /more:", err);
+        });
+});
+
+app.get("/comment/:imageId", (req, res) => {
+    // retrieves all comments for particular image when comments component mounts
+    db.getComments(req.params.imageId).then((results) => {
+        res.json(results.row);
+    });
+});
+
+app.post("/comment/:imageId", comment, (req, res) => {
+    db.saveComment(req.body.username, req.body.comment, req.body.username_id)
+        .then(() => {
+            res.json(req.body);
+        })
+        .catch((err) => {
+            console.log("err in post comment/imageId:", err);
         });
 });
 

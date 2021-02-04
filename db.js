@@ -38,3 +38,16 @@ module.exports.moreImages = (id) => {
     const params = [id];
     return db.query(q, params);
 };
+
+module.exports.getComments = (id) => {
+    const q = `SELECT comment FROM comments WHERE id $1`;
+    const params = [id];
+    return db.query(q, params);
+};
+
+module.exports.saveComment = () => {
+    const q = `INSERT comments (username, comment, username_id)
+    VALUES ($1, $2, $3)`;
+    const params = [];
+    return db.query(q, params);
+};

@@ -15,7 +15,7 @@ body {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
     /* grid-template-columns: repeat (4, 1fr); */
-    grid-gap: 1rem;
+    grid-gap: 0.5rem;
     margin: 1rem;
     width: 90vw;
 }
@@ -29,7 +29,9 @@ body {
     border-radius: 3%;
     background-color: whitesmoke;
 }
-
+.grow:hover {
+    transform: scale(1.1);
+}
 img {
     max-width: 95%;
     height: 95%;
@@ -57,6 +59,10 @@ img {
 .img--modal {
     max-width: 65%;
     height: 65%;
+}
+
+.commentfield {
+    background-color: crimson;
 }
 
 /* @media screen and (max-width: 600px) {

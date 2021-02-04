@@ -58,27 +58,29 @@ console.log("script is linked");
             description: "",
             username: "",
             file: null,
-            selectImg: null,
+            selectImg: null, //location.hash.slice(1),
             latestId: 0,
             moreImg: true,
         },
 
         // mounted is a lifecycle method that runs when the Vue instance renders
         mounted: function () {
+            //    PART 5 updating url with direct hash route to img
+            //     addEventListener("hashchange", () => {console.log("hash updated", location.hash)
+            // this.imageSelected = local.hash.slice(1)})
+
             // console.log("my vue instance has mounted");
             // console.log("this outside axios: ", this);
-            var self = this;
-
             axios
                 .get("/images")
-                .then(function (response) {
-                    console.log("this inside axios: ", self);
+                .then((response) => {
+                    console.log("this inside axios: ", this);
                     // axios will ALWAYS store the info coming from the server inside 'data' property
                     console.log("response from /images: ", response.data);
-                    self.images = response.data;
-                    self.latestId = self.images[self.images.length - 1].id;
+                    this.images = response.data;
+                    this.latestId = this.images[this.images.length - 1].id;
                 })
-                .catch(function (err) {
+                .catch((err) => {
                     console.log("err in /images: ", err);
                 });
         },
@@ -91,12 +93,11 @@ console.log("script is linked");
                 fd.append("description", this.description);
                 fd.append("username", this.username);
                 fd.append("file", this.file);
-                var self = this;
                 axios // response hier = req.body from server app.post upload
                     .post("/upload", fd)
                     .then((response) => {
                         console.log("response clickHandler:", response);
-                        self.images.unshift(response.data);
+                        this.images.unshift(response.data);
                     })
 
                     .catch((err) => console.log("err: ", err));
@@ -115,38 +116,27 @@ console.log("script is linked");
                 // latestId = latest.id;s
                 // console.log("latestId:", latestId);
                 this.latestId = this.images[this.images.length - 1].id;
-                var self = this;
-                axios.get(`/more/${this.latestId}`).then(function (response) {
+
+                axios.get(`/more/${this.latestId}`).then((response) => {
                     console.log(response.data);
-                    // console.log(
-                    //     "response.data[0].lowestId:",
-                    //     response.data[0].lowestId
-                    // );
-                    // console.log("self.latestId:", self.latestId);
+                    console.log(
+                        "response.data[0].lowestId:",
+                        response.data[0].lowestId
+                    );
+                    console.log("this.latestId:", this.latestId);
                     for (let i = 0; i < response.data.length; i++) {
                         if (response.data[i].id === response.data[i].lowestId) {
-                            moreImg = false;
+                            this.moreImg = false;
                         }
                     }
-                    self.images = [...self.images, ...response.data];
+                    this.images = [...this.images, ...response.data];
                 });
             },
-
-            //OLD CODE FIRST TRY PART 3
-            // selectImg: function (id) {
-            //     this.id = id;
-            //     console.log("this.id:", this.id);
-            //     imgClicked = true;
-
-            //     // console.log(e.target);
-            //     // //console.log(this)
-            //     // selectImg = each.id;
-            //     // console.log(each.id);+
-            // },
         },
     });
+
     Vue.component("comments", {
-        template: "#comments", //
+        template: "#commentcomponent", //
         data: function () {
             return {
                 comments: [],
@@ -156,8 +146,22 @@ console.log("script is linked");
         },
         props: ["imageId"],
         mounted: function () {
-            axios.get(`/comment/${this.immageId}`)
-            .then((){})
+            axios
+                .get(`/comment/${this.imageId}`)
+                .then((response) => {
+                    console.log("response from /comments:", response.data);
+                })
+                .catch((err) => {
+                    console.log("err in mounted comment:", err);
+                });
+        },
+        methods: {
+            addComment: function () {
+                axios.post("/comment", comments).then((response) => {
+                    console.log("response in post comment:", response.data);
+                    this.comments.push(response.data);
+                });
+            },
         },
     });
 })(); // IFEE closing
