@@ -40,14 +40,16 @@ module.exports.moreImages = (id) => {
 };
 
 module.exports.getComments = (id) => {
-    const q = `SELECT comment FROM comments WHERE id $1`;
+    const q = `SELECT * FROM comments WHERE image_id = $1`;
     const params = [id];
     return db.query(q, params);
 };
 
-module.exports.saveComment = () => {
-    const q = `INSERT comments (username, comment, username_id)
-    VALUES ($1, $2, $3)`;
-    const params = [];
+module.exports.saveComment = (username, comment, image_id) => {
+    const q = `INSERT INTO comments (username, comment, image_id)
+    VALUES ($1, $2, $3)
+    RETURNING comment, username, created_at`;
+    const params = [username, comment, image_id];
+    console.log(q, params);
     return db.query(q, params);
 };

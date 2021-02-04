@@ -28,7 +28,7 @@ const uploader = multer({
 });
 
 app.use(express.static("public"));
-app.use("/comment", express.json()); // does what?
+app.use(express.json()); // does what?
 
 app.get("/images", (req, res) => {
     db.getImages()
@@ -61,10 +61,10 @@ app.post("/upload", uploader.single("file"), s3.upload, (req, res) => {
 });
 
 app.get("/modal/:id", (req, res) => {
-    console.log("req.params.id:", req.params.id);
+    //   console.log("req.params.id:", req.params.id);
     db.getModal(req.params.id)
         .then((result) => {
-            console.log("result modal:", result);
+            //  console.log("result modal:", result);
             res.json(result.rows);
         })
         .catch((err) => {
@@ -85,16 +85,28 @@ app.get("/more/:latestId", (req, res) => {
 
 app.get("/comment/:imageId", (req, res) => {
     // retrieves all comments for particular image when comments component mounts
-    db.getComments(req.params.imageId).then((results) => {
-        res.json(results.row);
-    });
+    const imgId = parseInt(req.params.imageId);
+    console.log("imgId", imgId);
+    db.getComments(req.params.imageId)
+        .then((results) => {
+            console.log("results comment", results);
+            res.json(results.rows);
+        })
+        .catch((err) => {
+            console.log("err in get comment route:", err);
+        });
 });
 
-app.post("/comment/:imageId", comment, (req, res) => {
-    db.saveComment(req.body.username, req.body.comment, req.body.username_id)
-        .then(() => {
-            res.json(req.body);
+app.post("/comment", (req, res) => {
+    console.log("on post comment route");
+    console.log("req.body in comment:", req.body);
+    db.saveComment(req.body.username, req.body.comment, req.body.imageId);
+    console
+        .log("result in /comment:", result)
+        .then((result) => {
+            res.json(result.rows[0]);
         })
+
         .catch((err) => {
             console.log("err in post comment/imageId:", err);
         });

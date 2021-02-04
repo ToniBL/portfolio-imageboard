@@ -1,6 +1,7 @@
 body {
-    background-color: #f4eeed;
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    background-color: #14160b;
+    font-family: "Cormorant Garamond", serif;
+    font-family: "Cormorant SC", serif;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -8,14 +9,26 @@ body {
 }
 
 .header {
-    color: #999b84;
+    font-weight: 200;
+    color: #c0bb72;
+    text-align: center;
+}
+
+h1 {
+    font-family: "Cormorant SC", serif;
+    font-size: 2.5rem;
+}
+
+#subtitle {
+    font-size: 1.5rem;
+    font-family: "Cormorant Garamond", serif;
 }
 
 .container {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
     /* grid-template-columns: repeat (4, 1fr); */
-    grid-gap: 0.5rem;
+    grid-gap: 1rem;
     margin: 1rem;
     width: 90vw;
 }
@@ -24,9 +37,9 @@ body {
     display: flex;
     flex-direction: column;
     align-items: center;
-    border: solid #d8ac9c 1px;
-    box-shadow: 2px 4px #ecdcd6;
-    border-radius: 3%;
+    border: solid #4c504f 1px;
+    box-shadow: 1.5px 2.5px #7c8561;
+    border-radius: 1%;
     background-color: whitesmoke;
 }
 .grow:hover {
@@ -40,14 +53,26 @@ img {
 }
 
 .image--title {
-    color: #999b84;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #7b7e66;
 }
 .overlay {
     position: fixed;
-    height: 20rem;
-    width: 20rem;
-    background-color: #d8ac9cc7;
+    left: 35%;
+    width: 40rem;
+    background-color: #7c885af6;
     top: 10rem;
+    padding: 1rem;
+}
+
+.title--modal {
+    font-size: 2rem;
+}
+
+.description--modal {
+    margin-bottom: 0.5rem;
+    font-size: 1.5rem;
 }
 
 .image {
@@ -59,10 +84,81 @@ img {
 .img--modal {
     max-width: 65%;
     height: 65%;
+    display: block;
+}
+.upload--modal {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.5rem;
+}
+.exit--modal {
+    margin-left: 90%;
+    font-size: 1.5em;
+    font-weight: bold;
+    cursor: pointer;
 }
 
-.commentfield {
-    background-color: crimson;
+.comments--area {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.comment--display {
+    background-color: white;
+    border-radius: 5px;
+    min-height: 3rem;
+    margin: 5px;
+    padding: 10px;
+}
+
+button:hover {
+    background-color: #c0bb72;
+}
+
+input {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.5em;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+    background-color: #14160b;
+    color: whitesmoke;
+}
+
+#file-upload-button {
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.5em;
+    border-top-style: hidden;
+    border-right-style: hidden;
+    border-left-style: hidden;
+    border-bottom-style: groove;
+    background-color: #14160b;
+}
+
+.choose--file {
+    width: 2rem;
+    background-color: #7c885af6;
+    padding: 6px 12px;
+    cursor: pointer;
+    margin: 2rem;
+    height: 2rem;
+}
+input[type="file"] {
+    display: none;
+}
+
+button {
+    width: 5rem;
+    background-color: #7c885af6;
+    padding: 6px 12px;
+    cursor: pointer;
+    font-family: "Cormorant Garamond", serif;
+    font-weight: bold;
+    font-size: 1rem;
+    border: none;
+    margin: 0;
+    height: 2rem;
 }
 
 /* @media screen and (max-width: 600px) {

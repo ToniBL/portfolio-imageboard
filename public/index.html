@@ -2,11 +2,17 @@
 <head>
     <title>My Imageboard</title>
     <link rel="stylesheet" href="/css/style.css">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+SC:wght@300;400;600&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.gstatic.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300;400;500&family=Cormorant+SC:wght@300;400;600&display=swap" rel="stylesheet">
 </head>
 <body>
       
 <header class="header">
-     <h1>My Imageboard</h1>
+     <h1>Look at me</h1>
+     <p id="subtitle">a collection of endangered species by photographer Tim Flach </p>
 </header>
     <!-- This container is for our Vue instance! -->
     <!-- It will have access to our Vue code. -->
@@ -15,15 +21,16 @@
         <input v-model="title" type="text" name="title" placeholder="title">
         <input v-model="description" type="text" name="description" placeholder="description">
         <input v-model="username" type="text" name="username" placeholder="username">
-        <input @change="fileSelectHandler" type="file" name="file" accept="image/*">
-        <button @click.prevent="postImg">Upload</button>  
+        <label class="choose--file">Choose file<input @change="fileSelectHandler" type="file" name="file" accept="image/*"></label>
+        
+        <button class="upload--button" @click.prevent="postImg">Upload</button>  
     </form>
 
         <!-- LOOPING IN VUE! -->
         <!-- 'each' is our iterator -->
     <div class="container">
         <div class="card grow" v-for="each in images">
-            <img @click="selectImg = each.id" :src="each.url" alt="">
+            <img class="main--image" @click="selectImg = each.id" :src="each.url" alt="">
             <p class="image--title">{{each.title}}</p>
         </div>
     </div>
@@ -34,7 +41,7 @@
         @close="closeModal"
     ></image-modal-component>  
           <!--   components can be put anywhere within our main vue instance / we can put as many as we like / each has it's own data, although we only write one data function in script.js / we can have conditionals in the component and decide weither to display it. have a parameter "selected fruit" in main vue instance data and give it a boolean value-->
-    <button id="more" v-if="moreImg" @click="more">view more</button>
+    <button id="more" v-if="moreImg" @click="more">more</button>
 </div>
     <!-- script tag OUTSIDE "main" controls output of component, data for script comes from vue.component in script.js -->
     <script type="text/x-template" id="modal">
@@ -43,23 +50,30 @@
         <p class="exit--modal" @click="closeModal">X</p>
         <div class="image">
            <img class="img--modal" :src="url" alt="">
-           <h2 class="title-modal">{{title}}</h2>
-           <h2 class="description--modal"> {{description}} </h2>
-                <img-comments-component :id="comments"> 
-                </img-comments-component>
-           <p class="upload--modal">uploaded by {{username}} on {{created_at}}</p>
+           <h2 class="title--modal">{{title}}</h2>
+           <h3 class="description--modal"> {{description}} </h3>
+             
+           <p class="upload--modal">Uploaded by {{username}} on {{created_at}}</p>
 
+           <comment-component :image-id="imageId"> 
+            </comment-component>
         </div>   
     </div>     
     </script>
 
     <script type="text/x-template" id="commentcomponent">
-       <form action="" class="commentfield">
+        <div class="comments--area">
+     <form class="commentfield">
            <input v-model="username" type="text" name="username" placeholder="username">
            <input v-model="comment" type="text"
            name="comment" placeholder="your comment here">
-           <button>send</button>
+           <button id="send--comment" @click.prevent="addComment">send</button>
        </form>
+       <div class="comment--display"  v-for="each in comments">{{each.username}} wrote "{{each.comment}}"
+       </div>
+
+        </div>
+  
     </script>
 
     <script src="/js/vue.js"></script>

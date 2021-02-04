@@ -2,7 +2,46 @@ console.log("script is linked");
 // this file is where all of our Vue code will exist!!
 
 (function () {
-    Vue.component("image-modal", {
+    Vue.component("comment-component", {
+        template: "#commentcomponent", //
+        data: function () {
+            return {
+                comments: [],
+                username: "",
+                comment: "",
+            };
+        },
+        props: ["imageId"],
+        mounted: function () {
+            var self = this;
+            axios
+                .get(`/comment/${self.imageId}`)
+                .then((response) => {
+                    console.log("response from /comments:", response);
+                    self.comments = response.data;
+                })
+                .catch((err) => {
+                    console.log("err in mounted comment:", err);
+                });
+        },
+        methods: {
+            addComment: function () {
+                // create comments obj here
+                const commentobj = {
+                    comment: this.comment,
+                    username: this.username,
+                    imageId: this.imageId,
+                };
+                console.log("commentobj", commentobj);
+                axios.post("/comment", commentobj).then((response) => {
+                    console.log("response in post comment:", response.data);
+                    this.comments.push(response.data);
+                });
+            },
+        },
+    });
+
+    Vue.component("image-modal-component", {
         template: "#modal", // here goes the id from html script-template
         data: function () {
             // each component has it's own data
@@ -18,22 +57,23 @@ console.log("script is linked");
         props: ["imageId"],
 
         mounted: function () {
-            var self = this;
-
             console.log("modal mounted");
-            console.log("this.id:", this.id);
-
+            console.log("this.id:", this.imageId);
+            var self = this;
             axios
                 .get(`/modal/${this.imageId}`)
                 .then(function (response) {
-                    console.log("self:", self);
-                    console.log("response from get modal:", response.data);
+                    // console.log("self:", self);
+                    // console.log("response from get modal:", response.data);
                     self.url = response.data[0].url;
                     console.log("self.url:", self.url);
                     self.title = response.data[0].title;
                     self.description = response.data[0].description;
                     self.username = response.data[0].username;
-                    self.created_at = response.data[0].created_at;
+                    self.created_at = new Intl.DateTimeFormat("en-GB", {
+                        dateStyle: "long",
+                        timeStyle: "short",
+                    }).format(new Date(response.data[0].created_at));
                 })
                 .catch((err) => {
                     console.log("err in modal axios:", err);
@@ -76,9 +116,9 @@ console.log("script is linked");
                 .then((response) => {
                     console.log("this inside axios: ", this);
                     // axios will ALWAYS store the info coming from the server inside 'data' property
-                    console.log("response from /images: ", response.data);
+                    // console.log("response from /images: ", response.data);
                     this.images = response.data;
-                    this.latestId = this.images[this.images.length - 1].id;
+                    // this.latestId = this.images[this.images.length - 1].id;
                 })
                 .catch((err) => {
                     console.log("err in /images: ", err);
@@ -130,36 +170,6 @@ console.log("script is linked");
                         }
                     }
                     this.images = [...this.images, ...response.data];
-                });
-            },
-        },
-    });
-
-    Vue.component("comments", {
-        template: "#commentcomponent", //
-        data: function () {
-            return {
-                comments: [],
-                username: "",
-                comment: "",
-            };
-        },
-        props: ["imageId"],
-        mounted: function () {
-            axios
-                .get(`/comment/${this.imageId}`)
-                .then((response) => {
-                    console.log("response from /comments:", response.data);
-                })
-                .catch((err) => {
-                    console.log("err in mounted comment:", err);
-                });
-        },
-        methods: {
-            addComment: function () {
-                axios.post("/comment", comments).then((response) => {
-                    console.log("response in post comment:", response.data);
-                    this.comments.push(response.data);
                 });
             },
         },
