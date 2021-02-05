@@ -84,7 +84,8 @@ console.log("script is linked");
                 this.$emit("close");
             },
             // increaseCount: function () {
-            //     this.count++; this one method aplies to all the components individually
+            //     this.count++;
+            // },
         },
     });
     new Vue({

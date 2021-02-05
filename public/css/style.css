@@ -16,19 +16,22 @@ body {
 
 h1 {
     font-family: "Cormorant SC", serif;
-    font-size: 2.5rem;
+    font-size: 4rem;
+    text-decoration: underline;
 }
 
 #subtitle {
-    font-size: 1.5rem;
+    font-size: 3rem;
     font-family: "Cormorant Garamond", serif;
 }
 
 .container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(30%, 1fr));
-    /* grid-template-columns: repeat (4, 1fr); */
+    grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+    grid-template-columns: repeat (4, 1fr);
     grid-gap: 1rem;
+    grid-template-rows: min-content;
+    grid-auto-rows: min-content;
     margin: 1rem;
     width: 90vw;
 }
@@ -38,9 +41,10 @@ h1 {
     flex-direction: column;
     align-items: center;
     border: solid #4c504f 1px;
-    box-shadow: 1.5px 2.5px #7c8561;
+    box-shadow: 3px 4px #838f61;
     border-radius: 1%;
     background-color: whitesmoke;
+    max-width: 350px;
 }
 .grow:hover {
     transform: scale(1.1);
@@ -57,12 +61,21 @@ img {
     font-weight: bold;
     color: #7b7e66;
 }
+
+.modal--background {
+    width: 100vw;
+    height: 100vh;
+    position: fixed;
+    color: #222513dc;
+    z-index: 200;
+}
+
 .overlay {
     position: fixed;
-    left: 35%;
+    left: 38%;
     width: 40rem;
     background-color: #7c885af6;
-    top: 10rem;
+    top: 1rem;
     padding: 1rem;
 }
 
@@ -82,8 +95,8 @@ img {
 }
 
 .img--modal {
-    max-width: 65%;
-    height: 65%;
+    max-width: 60%;
+    height: 60%;
     display: block;
 }
 .upload--modal {
@@ -99,6 +112,7 @@ img {
 
 .comments--area {
     display: flex;
+    overflow: visible;
     flex-direction: column;
     align-content: center;
 }
@@ -109,6 +123,8 @@ img {
     min-height: 3rem;
     margin: 5px;
     padding: 10px;
+    font-family: "Cormorant Garamond", serif;
+    font-size: 1.5rem;
 }
 
 button:hover {
@@ -117,7 +133,7 @@ button:hover {
 
 input {
     font-family: "Cormorant Garamond", serif;
-    font-size: 1.5em;
+    font-size: 2em;
     border-top-style: hidden;
     border-right-style: hidden;
     border-left-style: hidden;

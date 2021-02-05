@@ -45,12 +45,14 @@
 </div>
     <!-- script tag OUTSIDE "main" controls output of component, data for script comes from vue.component in script.js -->
     <script type="text/x-template" id="modal">
-    <div class = overlay>
+    <div class = "modal--background">
+         <div class = overlay>
         <!-- RENDER THE MODAL HERE --> 
         <p class="exit--modal" @click="closeModal">X</p>
         <div class="image">
            <img class="img--modal" :src="url" alt="">
-           <h2 class="title--modal">{{title}}</h2>
+           <h2 class="title--modal">{{title}} </h2>
+           
            <h3 class="description--modal"> {{description}} </h3>
              
            <p class="upload--modal">Uploaded by {{username}} on {{created_at}}</p>
@@ -58,7 +60,9 @@
            <comment-component :image-id="imageId"> 
             </comment-component>
         </div>   
-    </div>     
+    </div> 
+    </div>
+       
     </script>
 
     <script type="text/x-template" id="commentcomponent">
